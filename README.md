@@ -1,76 +1,88 @@
-<h1 align="center">Virta EV Station API Testing (Python)</h1>
+# Virta EV Station API Testing (Python)
 
-<p align="center">  
-This application is built to do REST API testing using python scripts along with the use of Pytest module as our testing framework.
-</p>
+A lightweight example project for testing a REST API endpoint returning EV station data. It demonstrates:
+- A simple HTTP session wrapper for GET requests
+- Custom assertions and logging
+- Deterministic unit tests using mocking
 
-<p align="center">
-  <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
-</p>
+---
 
-# Demo
-![Page-Object-Model-Demo-Gif.gif](demo/pyrestapitest_demo.gif)
+## Table of Contents
 
+- [Overview](#overview)
+- [Requirements](#requirements)
+- [Quick Start](#quick-start)
+- [Installation](#installation)
+- [Running Tests](#running-tests)
+- [Usage Example](#usage-example)
+- [Logging](#logging)
+- [Reports (pytest-html)](#reports-pytest-html)
+- [Troubleshooting](#troubleshooting)
+- [Contributing / Development Notes](#contributing--development-notes)
+- [License](#license)
 
-## Languages, libraries and tools used
+---
 
-* __[Python](https://www.python.org/downloads/)__
-* __[Pytest](https://docs.pytest.org/en/6.2.x/getting-started.html)__
-* __[Requests](https://docs.python-requests.org/en/master/)__
-* __[JsonPath](https://pypi.org/project/jsonpath/)__
-* __[Pycharm](https://www.jetbrains.com/pycharm/download/)__
+## Overview
 
-Above Features are used to make code simple, generic, understandable, clean and easily maintainable for future development.
+This repository contains a small Python test suite that validates the response and schema of an EV station API. External effects (network and file I/O) are mocked in tests to keep them deterministic and fast.
+
+Demo assets:
+- Animated test demo: `demo/pyrestapitest_demo.gif`
+- Example report screenshot: `demo/pyrestapitest-report-file.png`
+
+---
+
+## Requirements
+
+- Python 3.8+
+- `requests`
+- `pytest` (for running tests)
+
+---
+
+## Quick Start
+
+```bash
+# from repository root
+python3 -m pip install --user requests pytest
+python3 -m pytest -q
+```
+
+---
 
 ## Installation
 
-Install the dependencies and start the testing.
+Install dependencies locally (user scope):
 
- __Install Pytest__:
-```sh
-pip3 install --user -U pytest
-```
- __Install Requests__:
-```sh
-pip3 install --user requests
+```bash
+python3 -m pip install --user requests
+python3 -m pip install --user -U pytest
 ```
 
- __Install Json Path__:
-```sh
-pip3 install --user jsonpath
-```
-## Automated tests
+---
 
-__To run a test, you can simply write the following command on Terminal__:
-```sh
-pytest
-```
+## Running Tests
 
-__To run and get details of all the executed test, you can simply write the following command on Terminal__:
-```sh
-pytest -rA
+Run the entire test suite:
+
+```bash
+python3 -m pytest -q
 ```
 
-__To run and generate full HTML details report of all the executed test, you can simply write the following commands on Terminal__:
+Run specific file or test:
 
-__But first install [Pytest-HTML](https://pypi.org/project/pytest-html/) by writing the following command on Terminal__
-```sh
-pip3 install --user pytest-html
+```bash
+python3 -m pytest -q tests/test_stations.py
+python3 -m pytest -q -k test_send_request_handles_request_exception_and_returns_none
+python3 -m pytest -vv
 ```
-__Then write the following command on Terminal__
-```sh
-pytest --html=YOUR_REPORT_FILE_NAME.html
-```
-
-__To see the reports, open the Project window, and then right-click then click on refresh then right-click on __StationReport.html__ to open the file on the default browser.__
-
-![Page-Object-Model-Demo-Gif.gif](demo/pyrestapitest-report-file.png)
 
 ---
 
 ## Usage Example
 
-A minimal example using the HTTP layer to fetch station data:
+Minimal example using the HTTP layer to fetch station data:
 
 ```python
 from session import HTTPSession, RequestTypes, Endpoints
@@ -81,60 +93,65 @@ print(status_code, type(data))  # e.g., '200', <class 'list'>
 ```
 
 Notes:
-- The `do_logging` flag in `params` controls request logging. It defaults to `True`. Set `{"do_logging": False}` to skip logging.
+- The optional `do_logging` flag in `params` controls request logging and defaults to `True`. Use `{"do_logging": False}` to disable.
 - On `requests` exceptions, `send_request` returns `None`.
+- `StatusCodes.STATUS_200` is `'200'` (string). The custom `assert_equal` compares stringified values by default; pass `compare_types=True` for strict type equality.
 
 ---
 
 ## Logging
 
 - Logs are written to the console and appended to `tests_output.log` in the repository root.
-- Tests mock logging to avoid file I/O during runs.
-- There is no rotation; the file grows over time. Delete it if it becomes too large.
+- Tests patch logging to avoid file writes.
+- There is no rotation; delete the log if it becomes too large.
 
 ---
 
-## Status Code Comparison Note
+## Reports (pytest-html)
 
-- `StatusCodes.STATUS_200` is `'200'` (a string). The custom `assert_equal` compares stringified values by default to avoid type fragility.
-- For strict type comparisons, pass `compare_types=True` to `assert_equal`.
+Generate an HTML report for test results:
+
+```bash
+python3 -m pip install --user pytest-html
+python3 -m pytest --html=report.html -q
+```
+
+Open the generated `report.html` in your browser. A sample screenshot is available at `demo/pyrestapitest-report-file.png`.
 
 ---
 
-## Troubleshooting Test Discovery
+## Troubleshooting
 
-If `pytest` has trouble collecting tests, try targeting the file or specific tests directly:
+- If test discovery fails, try targeting the specific file or running with verbosity:
 
 ```bash
 python3 -m pytest -q tests/test_stations.py
-python3 -m pytest -q -k test_send_request_handles_request_exception_and_returns_none
 python3 -m pytest -vv
 ```
+
+- Network calls and logging are mocked in tests. If you see unexpected file writes or network calls, ensure your tests patch `session.requests.get` and `session.Logger.log_request` correctly.
 
 ---
 
 ## Contributing / Development Notes
 
 - Prefer behavior-focused tests that mock external effects (network, file I/O).
-- Patch `session.requests.get` and `session.Logger.log_request` in tests to ensure determinism and isolation.
+- Patch `session.requests.get` and `session.Logger.log_request` to ensure deterministic tests.
 - Keep tests small and readable; avoid mocking internal implementation details unnecessarily.
-- Use the provided constants in `test_utils.py` for station schema expectations.
+- Use constants in `test_utils.py` to keep schema expectations consistent.
 
 ---
 
 ## License
 
-This project references the **Apache-2.0** license. Ensure a `LICENSE` file is present or review the badge link for details:
+This project is licensed under the **Apache-2.0** license. See the license badge/reference below and ensure a `LICENSE` file is present.
 
 - https://opensource.org/licenses/Apache-2.0
 
 ---
 
-# Prerequisites
-* __Python__
-* __Any IDE__
+## Demo
 
-# Built With
+![Testing demo animation](demo/pyrestapitest_demo.gif)
 
-* __[Python](https://www.python.org/downloads/)__ - Language used to build the application.
-* __[Pycharm](https://www.jetbrains.com/pycharm/download/)__ - The IDE for writing Automation Test Scripts
+![HTML report screenshot](demo/pyrestapitest-report-file.png)
