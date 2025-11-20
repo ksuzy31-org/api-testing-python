@@ -1,0 +1,71 @@
+
+==================================================
+2025-11-19 20:00:40.804847 - TEST STARTED: test_station_api_status_code2025-11-19 20:00:41.542611 - Executed GET request
+2025-11-19 20:00:41.542611 - URL: https://api.test.virta-ev.com/v4/stations
+2025-11-19 20:00:41.542611 - PARAMETERS: {'latMin': 60.164101, 'latMax': 60.164104, 'longMin': 24, 'longMax': 25}
+2025-11-19 20:00:41.542611 - RESPONSE STATUS CODE: 2002025-11-19 20:00:41.543986 - 
+2025-11-19 20:00:41.543986 - Executed assertion:
+2025-11-19 20:00:41.543986 - EXPRESSION: Status code of https://api.test.virta-ev.com/v4/stations enpoint actual value [200] is equal to expected value [200]
+2025-11-19 20:00:41.543986 - RESULT: True2025-11-19 20:00:41.544103 - 
+2025-11-19 20:00:41.544103 - TEST FINISHED: test_station_api_status_code
+2025-11-19 20:00:41.544103 - TIME ELAPSED: 0:00:00.739193
+==================================================
+2025-11-19 20:00:41.545523 - TEST STARTED: test_station_api_returned_list_length2025-11-19 20:00:42.101361 - Executed GET request
+2025-11-19 20:00:42.101361 - URL: https://api.test.virta-ev.com/v4/stations
+2025-11-19 20:00:42.101361 - PARAMETERS: {'latMin': 60.164101, 'latMax': 60.164104, 'longMin': 24, 'longMax': 25}
+2025-11-19 20:00:42.101361 - RESPONSE STATUS CODE: 200
+==================================================
+2025-11-19 20:00:42.143305 - TEST STARTED: test_data_model2025-11-19 20:00:42.750232 - Executed GET request
+2025-11-19 20:00:42.750232 - URL: https://api.test.virta-ev.com/v4/stations
+2025-11-19 20:00:42.750232 - PARAMETERS: {'latMin': 60.164101, 'latMax': 60.164104, 'longMin': 24, 'longMax': 25}
+2025-11-19 20:00:42.750232 - RESPONSE STATUS CODE: 2002025-11-19 20:00:42.753219 - 
+2025-11-19 20:00:42.753219 - Executed assertion:
+2025-11-19 20:00:42.753219 - EXPRESSION: The initial level of data type where actual value [<class 'list'>] is equal to expected value [<class 'list'>]
+2025-11-19 20:00:42.753219 - RESULT: True
+==================================================
+2025-11-19 20:00:42.763752 - TEST STARTED: test_send_request_calls_logger_when_logging_enabled2025-11-19 20:00:43.403756 - 
+2025-11-19 20:00:43.403756 - Executed assertion:
+2025-11-19 20:00:43.403756 - EXPRESSION: Status code should be 200 when logging enabled actual value [200] is equal to expected value [200]
+2025-11-19 20:00:43.403756 - RESULT: True2025-11-19 20:00:43.404080 - 
+2025-11-19 20:00:43.404080 - Executed assertion:
+2025-11-19 20:00:43.404080 - EXPRESSION: Response payload should parse into a list
+2025-11-19 20:00:43.404080 - RESULT: True2025-11-19 20:00:43.404375 - 
+2025-11-19 20:00:43.404375 - Executed assertion:
+2025-11-19 20:00:43.404375 - EXPRESSION: Logger.log_request should be called when do_logging is True
+2025-11-19 20:00:43.404375 - RESULT: True
+==================================================
+2025-11-19 20:00:43.412878 - TEST STARTED: test_send_request_does_not_call_logger_when_logging_disabled2025-11-19 20:00:43.995988 - 
+2025-11-19 20:00:43.995988 - Executed assertion:
+2025-11-19 20:00:43.995988 - EXPRESSION: Status code should be 200 when logging disabled actual value [200] is equal to expected value [200]
+2025-11-19 20:00:43.995988 - RESULT: True2025-11-19 20:00:43.996422 - 
+2025-11-19 20:00:43.996422 - Executed assertion:
+2025-11-19 20:00:43.996422 - EXPRESSION: Logger.log_request should not be called when do_logging is False
+2025-11-19 20:00:43.996422 - RESULT: True2025-11-19 20:00:43.996715 - 
+2025-11-19 20:00:43.996715 - Executed assertion:
+2025-11-19 20:00:43.996715 - EXPRESSION: do_logging flag should be popped from params
+2025-11-19 20:00:43.996715 - RESULT: True2025-11-19 20:00:43.996875 - 
+2025-11-19 20:00:43.996875 - TEST FINISHED: test_send_request_does_not_call_logger_when_logging_disabled
+2025-11-19 20:00:43.996875 - TIME ELAPSED: 0:00:00.583892
+==================================================
+2025-11-19 20:00:43.998668 - TEST STARTED: test_send_request_handles_request_exception_and_returns_none2025-11-19 20:00:44.618353 - Executed GET request
+2025-11-19 20:00:44.618353 - URL: https://api.test.virta-ev.com/v4/stations
+2025-11-19 20:00:44.618353 - PARAMETERS: {'latMin': 60.164101, 'latMax': 60.164104, 'longMin': 24, 'longMax': 25}
+2025-11-19 20:00:44.618353 - RESPONSE STATUS CODE: 200
+==================================================
+2025-11-19 20:00:44.630634 - TEST STARTED: test_params_are_not_modified_when_do_logging_key_absent2025-11-19 20:00:45.224676 - Executed GET request
+2025-11-19 20:00:45.224676 - URL: https://api.test.virta-ev.com/v4/stations
+2025-11-19 20:00:45.224676 - PARAMETERS: {'latMin': 60.164101, 'latMax': 60.164104, 'longMin': 24, 'longMax': 25}
+2025-11-19 20:00:45.224676 - RESPONSE STATUS CODE: 2002025-11-19 20:00:45.227767 - 
+2025-11-19 20:00:45.227767 - Executed assertion:
+2025-11-19 20:00:45.227767 - EXPRESSION: Params should remain unchanged when do_logging key is absent actual value [{'latMin': 60.164101, 'latMax': 60.164104, 'longMin': 24, 'longMax': 25}] is equal to expected value [{'latMin': 60.164101, 'latMax': 60.164104, 'longMin': 24, 'longMax': 25}]
+2025-11-19 20:00:45.227767 - RESULT: True2025-11-19 20:00:45.227992 - 
+2025-11-19 20:00:45.227992 - TEST FINISHED: test_params_are_not_modified_when_do_logging_key_absent
+2025-11-19 20:00:45.227992 - TIME ELAPSED: 0:00:00.597190
+==================================================
+2025-11-19 20:00:45.229655 - TEST STARTED: test_response_body_is_parsed_as_list2025-11-19 20:00:45.832767 - Executed GET request
+2025-11-19 20:00:45.832767 - URL: https://api.test.virta-ev.com/v4/stations
+2025-11-19 20:00:45.832767 - PARAMETERS: {'latMin': 60.164101, 'latMax': 60.164104, 'longMin': 24, 'longMax': 25}
+2025-11-19 20:00:45.832767 - RESPONSE STATUS CODE: 2002025-11-19 20:00:45.836454 - 
+2025-11-19 20:00:45.836454 - Executed assertion:
+2025-11-19 20:00:45.836454 - EXPRESSION: Parsed response should be a list of stations
+2025-11-19 20:00:45.836454 - RESULT: True
